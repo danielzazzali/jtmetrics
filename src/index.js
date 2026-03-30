@@ -16,6 +16,7 @@ const __dirname = path.dirname(__filename)
  * @param {string} options.codePath - Absolute path to the target code directory
  * @param {string} [options.customMetricsPath] - Path to additional custom metrics
  * @param {boolean} [options.useDefaultMetrics=true] - Whether to include default metrics
+ * @param {boolean} [options.useBuiltinMetrics] - DEPRECATED: Alias for `useDefaultMetrics`.
  * @param {string} [options.metricsIgnoreFilePath] - Path to a `.metricsignore` file
  * @returns {Promise<Object>} - Final result object containing metrics and error logs
  *
@@ -36,9 +37,12 @@ async function calculateMetrics ({
   codePath,
   customMetricsPath,
   useDefaultMetrics = true,
+  useBuiltinMetrics, // Legacy support
   metricsIgnoreFilePath
 } = {}) {
-  if (!useDefaultMetrics && !customMetricsPath) {
+  const shouldUseDefault = useBuiltinMetrics !== undefined ? useBuiltinMetrics : useDefaultMetrics
+
+  if (!shouldUseDefault && !customMetricsPath) {
     throw new Error(MESSAGES.ERRORS.ERROR_NO_METRICS)
   }
 
@@ -49,7 +53,7 @@ async function calculateMetrics ({
   const codeFiles = await getFiles(codePath, metricsIgnoreFilePath)
   const ASTs = await constructASTs(codeFiles)
 
-  const metricFiles = await loadMetricFiles(useDefaultMetrics,
+  const metricFiles = await loadMetricFiles(shouldUseDefault,
     customMetricsPath, __dirname)
   const metricObjects = await loadMetricObjects(metricFiles)
 

@@ -40,6 +40,34 @@ describe('index.js', function () {
       expect(metricsResults['function-coupling']).toHaveProperty('status', true)
     })
 
+    it('Should contain metric lines-per-file with status true', function () {
+      expect(metricsResults['lines-per-file']).toHaveProperty('status', true)
+    })
+
+    it('Should contain metric function-length with status true', function () {
+      expect(metricsResults['function-length']).toHaveProperty('status', true)
+    })
+
+    it('Should contain metric parameter-count with status true', function () {
+      expect(metricsResults['parameter-count']).toHaveProperty('status', true)
+    })
+
+    it('Should contain metric import-instability with status true', function () {
+      expect(metricsResults['import-instability']).toHaveProperty('status', true)
+    })
+
+    it('Should contain metric dependency-centrality with status true', function () {
+      expect(metricsResults['dependency-centrality']).toHaveProperty('status', true)
+    })
+
+    it('Should contain metric function-dependency-summary with status true', function () {
+      expect(metricsResults['function-dependency-summary']).toHaveProperty('status', true)
+    })
+
+    it('Should contain metric class-dependency-summary with status true', function () {
+      expect(metricsResults['class-dependency-summary']).toHaveProperty('status', true)
+    })
+
     it('Should contain metric classes-per-file with status true', function () {
       expect(metricsResults['classes-per-file']).toHaveProperty('status', true)
     })

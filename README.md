@@ -45,6 +45,7 @@ console.log(results)
 | `codePath`               | `string`  | ✅       | —       | Path to the source code directory to analyze. The analyzer will scan it recursively.           |
 | `customMetricsPath`      | `string`  | ❌       | —       | Path to a folder containing custom metric modules.                                             |
 | `useDefaultMetrics`      | `boolean` | ❌       | `true`  | Whether to load built-in metrics. Set to `false` to run only custom metrics.                   |
+| `useBuiltinMetrics`      | `boolean` | ❌       | `true`  | **Legacy:** Alias for `useDefaultMetrics`. If present, it takes precedence.                      |
 | `metricsIgnoreFilePath`  | `string`  | ❌       | —       | Path to a `.metricsignore` file (one path per line) to skip files or directories.              |
 
 ### Behavior Matrix
@@ -61,15 +62,22 @@ console.log(results)
 
 The library comes with the following built-in metrics. Click each link for detailed documentation:
 
-| Metric ID            | Name                   | Description                                                            | Documentation                                             |
-| -------------------- | ---------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------- |
-| `files`              | **Files**              | Identifies all source files in the repository.                         | [files.doc.md](./docs/files.doc.md)                       |
-| `functions-per-file` | **Functions Per File** | Counts all functions declared per file.                                | [functionsPerFile.doc.md](./docs/functionsPerFile.doc.md) |
-| `function-coupling`  | **Function Coupling**  | Measures **fan-in** and **fan-out** at the function level.             | [functionCoupling.doc.md](./docs/functionCoupling.doc.md) |
-| `classes-per-file`   | **Classes Per File**   | Lists all classes and their methods/properties per file.               | [classesPerFile.doc.md](./docs/classesPerFile.doc.md)     |
-| `class-coupling`     | **Class Coupling**     | Measures **fan-in** and **fan-out** between class methods.             | [classCoupling.doc.md](./docs/classCoupling.doc.md)       |
-| `file-coupling`      | **File Coupling**      | Measures **file-level dependencies** (imports/require) and dependents. | [fileCoupling.doc.md](./docs/fileCoupling.doc.md)         |
-| `instance-mapper`    | **Instance Mapper**    | Maps instances to their class types for resolving method calls.        | [instanceMapper.doc.md](./docs/instanceMapper.doc.md)     |
+| Metric ID                       | Name                            | Description                                                                    | Documentation                                                     |
+| ------------------------------- | ------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------- |
+| `files`                         | **Files**                       | Identifies all source files in the repository.                                 | [files.doc.md](./docs/files.doc.md)                               |
+| `lines-per-file`                | **Lines Per File**              | Counts total and non-empty lines for each source file.                         | |
+| `functions-per-file`            | **Functions Per File**          | Counts all functions declared per file.                                        | [functionsPerFile.doc.md](./docs/functionsPerFile.doc.md)         |
+| `parameter-count`               | **Parameter Count**             | Counts declared parameters for each named function.                            | |
+| `function-length`               | **Function Length**             | Counts the lines of code within each function.                                 | |
+| `function-coupling`             | **Function Coupling**           | Measures **fan-in** and **fan-out** at the function level.                     | [functionCoupling.doc.md](./docs/functionCoupling.doc.md)         |
+| `classes-per-file`              | **Classes Per File**            | Lists all classes and their methods/properties per file.                       | [classesPerFile.doc.md](./docs/classesPerFile.doc.md)             |
+| `class-coupling`                | **Class Coupling**              | Measures **fan-in** and **fan-out** between class methods.                     | [classCoupling.doc.md](./docs/classCoupling.doc.md)               |
+| `class-dependency-summary`      | **Class Dependency Summary**    | Aggregates fan-in/fan-out totals for each class.                               |                                                                   |
+| `function-dependency-summary`   | **Function Dependency Summary** | Aggregates fan-in/fan-out totals for each named function.                      |                                                                   |
+| `file-coupling`                 | **File Coupling**               | Measures file-level dependencies (imports/require).                            | [fileCoupling.doc.md](./docs/fileCoupling.doc.md)                 |
+| `import-instability`            | **Import Instability**          | Computes file instability based on afferent/efferent coupling.                 |                                                                   |
+| `dependency-centrality`         | **Dependency Centrality**       | Computes in-degree, out-degree, and total centrality from the dependency graph. |                                                                   |
+| `instance-mapper`               | **Instance Mapper**             | Maps instances to their class types for resolving method calls.                | [instanceMapper.doc.md](./docs/instanceMapper.doc.md)             |
 
 
 ## Creating Custom Metrics
