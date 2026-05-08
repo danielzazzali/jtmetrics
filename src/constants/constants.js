@@ -17,7 +17,9 @@ export const BABEL_PARSER_OPTIONS = {
   sourceType: 'unambiguous',
   plugins: [
     'typescript',
-    'jsx'
+    'jsx',
+    'decorators-legacy',
+    'classProperties'
   ]
 }
 
