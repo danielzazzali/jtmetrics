@@ -1,3 +1,4 @@
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Files on Repository',
   description: 'Collects and records all source files in the repository by their path.',
@@ -6,6 +7,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   /* Examples:
      /src/file.js
@@ -18,6 +20,7 @@ const visitors = {
 }
 
 // Clean up state before finishing
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
 

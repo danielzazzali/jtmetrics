@@ -101,5 +101,8 @@ class ErrorLogger {
   }
 }
 
+/** @type {ErrorLogger | undefined} */
+ErrorLogger.instance
+
 /** Singleton instance of the ErrorLogger */
 export const logger = ErrorLogger.getInstance()

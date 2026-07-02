@@ -77,7 +77,7 @@ const empty = null
  *
  * @param {Object} x                    - Object with a `state.id` property.
  * @param {Node|null} h                 - Original heap.
- * @returns {Node}                      - New heap including `x`.
+ * @returns {Node | null}               - New heap including `x`.
  *
  * @complexity O(log(n))
  *

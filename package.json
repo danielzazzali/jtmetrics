@@ -3,13 +3,16 @@
   "version": "1.1.0",
   "description": "JTMetrics is a lightweight and extensible library for calculating code metrics in JavaScript and TypeScript repositories.",
   "main": "src/index.js",
+  "types": "types/index.d.ts",
   "type": "module",
   "engines": {
     "node": ">=18"
   },
   "scripts": {
     "test": "SKIP_IGNORE=true node --no-warnings=ExperimentalWarning --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "format": "standard --fix"
+    "format": "standard --fix",
+    "typecheck": "tsc --noEmit",
+    "build:types": "tsc --emitDeclarationOnly"
   },
   "repository": {
     "type": "git",
@@ -40,8 +43,12 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.0.5",
+    "@types/babel__parser": "^7.0.0",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/node": "^26.1.0",
     "jest": "^30.0.5",
-    "standard": "^17.1.2"
+    "standard": "^17.1.2",
+    "typescript": "^6.0.3"
   },
   "standard": {
     "ignore": [

@@ -1,3 +1,4 @@
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Class Coupling',
   description: 'Analyzes each class to identify Fan-Out and Fan-In',
@@ -7,6 +8,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   // Entry point for each parsed file, load dependency
   Program (path) {
@@ -1579,6 +1581,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

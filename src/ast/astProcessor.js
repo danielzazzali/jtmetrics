@@ -70,8 +70,8 @@ async function getAST (filePath) {
 /**
  * Constructs cleaned ASTs for a given list of files.
  *
- * @param {Array<{ filePath: string }>} files - List of files to parse.
- * @returns {Promise<Array<object>>} List of cleaned ASTs with file path metadata.
+ * @param {import('../types.js').FileEntry[]} files - List of files to parse.
+ * @returns {Promise<Object[]>} List of cleaned ASTs with file path metadata.
  */
 async function constructASTs (files) {
   const astPromises = files.map(async (file) => {

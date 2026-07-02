@@ -2,6 +2,7 @@ function sumValues (obj) {
   return Object.values(obj).reduce((acc, value) => acc + value, 0)
 }
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Function Dependency Summary',
   description: 'Aggregates fan-in and fan-out dependency totals for each named function',
@@ -11,6 +12,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   Program (path) {
     state.currentFile = path.node.filePath
@@ -36,6 +38,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

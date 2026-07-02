@@ -1,3 +1,4 @@
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Parameter Count',
   description: 'Counts declared parameters for each named function in each source file',
@@ -7,6 +8,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   Program (path) {
     state.currentFile = path.node.filePath
@@ -22,6 +24,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

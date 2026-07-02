@@ -12,21 +12,21 @@ describe('metricsLoader.js', () => {
   describe('loadMetricFiles', () => {
     it('load metric files', async () => {
       const validMetricPath = path.resolve(__dirname, '../test-src/ignore-test/')
-      const metricsFiles = await loadMetricFiles(true, null, validMetricPath)
+      const metricsFiles = await loadMetricFiles(true, validMetricPath, null)
 
       expect(metricsFiles.length).toBe(4)
     })
 
     it('throws if neither default nor custom metrics provided', async () => {
       const validMetricPath = path.resolve(__dirname, '../test-src/ignore-test/')
-      await expect(loadMetricFiles(false, null, validMetricPath))
+      await expect(loadMetricFiles(false, validMetricPath, null))
         .rejects
         .toThrow('No metrics to load provided: useDefaultMetrics:false, customMetricsPath:null')
     })
 
     it('not default metrics provided', async () => {
       const customValidMetricsPath = path.resolve(__dirname, '../test-src/ignore-test/metrics')
-      const metricsFiles = await loadMetricFiles(false, customValidMetricsPath, '')
+      const metricsFiles = await loadMetricFiles(false, '', customValidMetricsPath)
 
       expect(metricsFiles.length).toBe(4)
     })
@@ -37,7 +37,7 @@ describe('metricsLoader.js', () => {
       const spy = jest.spyOn(logger, 'logMetricError').mockImplementation(() => {})
 
       const validMetricPath = path.resolve(__dirname, '../test-src/ignore-test/')
-      const metricsFiles = await loadMetricFiles(true, null, validMetricPath)
+      const metricsFiles = await loadMetricFiles(true, validMetricPath, null)
 
       const result = await loadMetricObjects(metricsFiles)
 

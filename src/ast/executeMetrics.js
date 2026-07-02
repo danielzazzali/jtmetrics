@@ -6,12 +6,12 @@ import { logger } from '../logger/logger.js'
 /**
  * Sorts metric objects by dependency order and initializes the result map.
  *
- * @param {Array<Object>} metricObjects - Array of metric definitions.
- * @returns {{ sortedMetrics: Array<Object>, resultMap: Object }}
+ * @param {import('../types.js').MetricObject[]} metricObjects - Array of metric definitions.
+ * @returns {{ sortedMetrics: import('../types.js').MetricObject[], resultMap: Object.<string, *> }}
  * Sorted metrics and an empty result map.
  */
 function sortAndInit (metricObjects) {
-  const sortedMetrics = kahnSort(metricObjects)
+  const sortedMetrics = /** @type {import('../types.js').MetricObject[]} */ (kahnSort(metricObjects))
   const resultMap = {}
   return { sortedMetrics, resultMap }
 }
@@ -20,8 +20,8 @@ function sortAndInit (metricObjects) {
  * Resolves dependencies for a single metric by replacing dependency IDs
  * with deep copies of the corresponding metric results.
  *
- * @param {Object} metric - The current metric object.
- * @param {Object} resultMap - Map of metric results by ID.
+ * @param {import('../types.js').MetricObject} metric - The current metric object.
+ * @param {Object.<string, *>} resultMap - Map of metric results by ID.
  */
 function resolveDependencies (metric, resultMap) {
   if (!metric.state.dependencies) return
@@ -38,8 +38,8 @@ function resolveDependencies (metric, resultMap) {
  * Traverses all ASTs with the given metric's visitors.
  * Logs errors if traversal fails for any AST.
  *
- * @param {Object} metric - Metric containing visitors and state.
- * @param {Array<Object>} ASTs - List of ASTs to traverse.
+ * @param {import('../types.js').MetricObject} metric - Metric containing visitors and state.
+ * @param {Object[]} ASTs - List of ASTs to traverse with file path metadata.
  */
 function traverseASTs (metric, ASTs) {
   const visitorsArray = [metric.visitors]
@@ -47,7 +47,7 @@ function traverseASTs (metric, ASTs) {
   for (const visitors of visitorsArray) {
     for (const ast of ASTs) {
       try {
-        traverse.default(ast, visitors, null, metric.state)
+        traverse.default(ast, visitors, undefined, metric.state)
       } catch (error) {
         logger.logTraverseError(
           `${MESSAGES.ERRORS.ERROR_TRAVERSING_AST} ${metric.state.id} -> ${ast.program.filePath}: ${error}`
@@ -60,8 +60,8 @@ function traverseASTs (metric, ASTs) {
 /**
  * Executes optional post-processing on a metric and stores the final result.
  *
- * @param {Object} metric - Metric to process.
- * @param {Object} resultMap - Map of metric results by ID.
+ * @param {import('../types.js').MetricObject} metric - Metric to process.
+ * @param {Object.<string, *>} resultMap - Map of metric results by ID.
  */
 function postProcessAndStore (metric, resultMap) {
   if (metric.postProcessing) {
@@ -73,9 +73,9 @@ function postProcessAndStore (metric, resultMap) {
 /**
  * Builds the final output object containing all metrics' results and errors.
  *
- * @param {Array<Object>} sortedMetrics - List of processed metrics.
- * @param {Object} resultMap - Map of metric results by ID.
- * @returns {Object} Object containing all metrics' results and error logs.
+ * @param {import('../types.js').MetricObject[]} sortedMetrics - List of processed metrics.
+ * @param {Object.<string, *>} resultMap - Map of metric results by ID.
+ * @returns {import('../types.js').MetricsOutput} Final result object with metrics and error logs.
  */
 function buildFinalResult (sortedMetrics, resultMap) {
   const output = {}
@@ -95,7 +95,7 @@ function buildFinalResult (sortedMetrics, resultMap) {
     metric: logger.getMetricErrors(),
     traverse: logger.getTraverseErrors()
   }
-  return output
+  return /** @type {import('../types.js').MetricsOutput} */ (output)
 }
 
 /**
@@ -105,9 +105,9 @@ function buildFinalResult (sortedMetrics, resultMap) {
  * - Traverses ASTs with metric visitors.
  * - Runs post-processing and compiles results.
  *
- * @param {Array<Object>} metricObjects - List of metric definitions.
- * @param {Array<Object>} ASTs - List of parsed ASTs to analyze.
- * @returns {Promise<Object>} Final result object with metrics and error logs.
+ * @param {import('../types.js').MetricObject[]} metricObjects - List of metric definitions.
+ * @param {Object[]} ASTs - List of parsed ASTs to analyze.
+ * @returns {Promise<import('../types.js').MetricsOutput>} Final result object with metrics and error logs.
  */
 async function executeMetrics (metricObjects, ASTs) {
   const { sortedMetrics, resultMap } = sortAndInit(metricObjects)

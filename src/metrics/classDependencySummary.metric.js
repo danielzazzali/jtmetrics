@@ -6,6 +6,7 @@ function sumNestedValues (nestedObj) {
   return Object.values(nestedObj).reduce((acc, inner) => acc + sumValues(inner), 0)
 }
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Class Dependency Summary',
   description: 'Aggregates fan-in and fan-out dependency totals for each class across its methods',
@@ -15,6 +16,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   Program (path) {
     state.currentFile = path.node.filePath
@@ -51,6 +53,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

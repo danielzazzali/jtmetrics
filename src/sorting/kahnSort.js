@@ -6,12 +6,12 @@ import { logger } from '../logger/logger.js'
  * Each metric must have a unique `state.id` and a list of `state.dependencies` (IDs of prerequisite metrics).
  * Uses a leftist min-heap to always select the next metric with the smallest `state.id` among those with zero indegree.
  *
- * @param {Array<Object>} metrics
+ * @param {import('../types.js').MetricObject[]} metrics
  *   - Array of metric objects. Each object should have:
  *     - `state.id`         : a unique, comparable identifier (e.g., string or number).
  *     - `state.dependencies`: an array of IDs that this metric depends on.
  *
- * @returns {Array<Object> | null}
+ * @returns {import('../types.js').MetricObject[] | null}
  *   - Sorted array of metrics in topological order (by `state.id` tie-break) if no cycle is detected.
  *   - `null` if the dependency graph contains a cycle (i.e., not all metrics can be ordered).
  *
@@ -41,7 +41,7 @@ function kahnSort (metrics) {
 
   /**
    * Quick lookup from metric ID to the metric object.
-   * @type {Record<string, Object>}
+   * @type {Record<string, import('../types.js').MetricObject>}
    */
   const metricMap = {}
 
@@ -77,6 +77,7 @@ function kahnSort (metrics) {
   }
 
   // Initialize a min-heap of metrics with zero indegree
+  /** @type {import('../data-structures/leftistMinHeap.js').Node | null} */
   let heap = empty
   for (const id of Object.keys(indegree)) {
     if (indegree[id] === 0) {
@@ -86,7 +87,7 @@ function kahnSort (metrics) {
 
   /**
    * Resulting list of metrics in topologically sorted order.
-   * @type {Array<Object>}
+   * @type {import('../types.js').MetricObject[]}
    */
   const order = []
 

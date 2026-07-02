@@ -1,3 +1,4 @@
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Instance Mapper',
   description: 'Walks through each class method to identify instance accesses (this.prop and local variables) and map them to their constructor types',
@@ -7,6 +8,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   // Entry point for each parsed file, load dependency
   Program (path) {
@@ -370,6 +372,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

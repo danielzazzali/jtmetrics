@@ -36,6 +36,7 @@ function buildCouplingGraph (rawFileCoupling) {
   return result
 }
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Dependency Centrality',
   description: 'Computes in-degree, out-degree, and degree centrality from the file dependency graph',
@@ -45,12 +46,14 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   Program (path) {
     state.currentFile = path.node.filePath
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   const fileCouplingResult = buildCouplingGraph(state.dependencies['file-coupling'])
   const totalFiles = Object.keys(fileCouplingResult).length

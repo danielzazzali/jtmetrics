@@ -3,6 +3,7 @@ import { parse } from '@babel/parser'
 import traverse from '@babel/traverse'
 import { BABEL_PARSER_OPTIONS } from '../constants/constants.js'
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Function Length',
   description: 'Counts line spans for named functions in each source file',
@@ -26,15 +27,18 @@ function buildLengthMap (filePath) {
   const lengthByName = {}
 
   traverse.default(ast, {
+    /** @param {*} path */
     FunctionDeclaration (path) {
       if (!path.node.id || !path.node.id.name) return
       lengthByName[path.node.id.name] = getNodeLength(source, path.node)
     },
+    /** @param {*} path */
     FunctionExpression (path) {
       if (path.parentPath.node.type !== 'VariableDeclarator') return
       if (!path.parentPath.node.id || !path.parentPath.node.id.name) return
       lengthByName[path.parentPath.node.id.name] = getNodeLength(source, path.node)
     },
+    /** @param {*} path */
     ArrowFunctionExpression (path) {
       if (!path.parentPath.node.id || !path.parentPath.node.id.name) return
       lengthByName[path.parentPath.node.id.name] = getNodeLength(source, path.node)
@@ -44,6 +48,7 @@ function buildLengthMap (filePath) {
   return lengthByName
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   Program (path) {
     state.currentFile = path.node.filePath
@@ -60,6 +65,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

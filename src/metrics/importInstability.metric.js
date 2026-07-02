@@ -36,6 +36,7 @@ function buildCouplingGraph (rawFileCoupling) {
   return result
 }
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Import Instability',
   description: 'Computes afferent and efferent coupling from file imports and derives instability I = Ce / (Ca + Ce)',
@@ -45,12 +46,14 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   Program (path) {
     state.currentFile = path.node.filePath
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   const fileCouplingGraph = buildCouplingGraph(state.dependencies['file-coupling'])
 

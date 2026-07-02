@@ -1,3 +1,4 @@
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Classes Per File',
   description: 'Analyzes each source file to identify and record all top-level classes defined',
@@ -7,6 +8,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   // Entry point for each parsed file, load dependency
   Program (path) {
@@ -189,6 +191,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

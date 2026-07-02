@@ -1,5 +1,6 @@
 import { extname as getExt } from 'path'
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Function Coupling',
   description: 'Measures function-level coupling by recording Fan-In and Fan-Out relationships between functions',
@@ -9,6 +10,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   // Entry point for each parsed file, load dependency and create functions array for each file
   Program (path) {
@@ -170,6 +172,7 @@ const visitors = {
 }
 
 // Clean up state before finishing
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

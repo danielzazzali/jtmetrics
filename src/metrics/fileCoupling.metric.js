@@ -1,6 +1,7 @@
 import path from 'path'
 import fs from 'fs'
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'File Coupling',
   description: 'Measures file-level coupling by computing each file’s fan-in (dependent files) and fan-out (dependencies)',
@@ -10,6 +11,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   // Entry point for each parsed file, load dependency
   Program (path) {
@@ -86,6 +88,7 @@ function resolveImportPath (importingFile, importSource) {
 }
 
 // Clean up and compute fanIn/fanOut before finishing
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   const raw = state.result
 

@@ -8,17 +8,17 @@ import { pathToFileURL } from 'url'
  * Loads metric files from default and/or custom paths.
  *
  * @param {boolean} useDefaultMetrics - Whether to include metrics from the default metrics directory.
- * @param {string} [customMetricsPath] - Optional path to additional custom metrics.
  * @param {string} __dirname - Directory of the current module.
- * @returns {Promise<Array<{filePath: string, fileName: string}>>}
+ * @param {string} [customMetricsPath] - Optional path to additional custom metrics.
+ * @returns {Promise<import('../types.js').FileEntry[]>}
  * List of metric file objects with absolute paths and names.
  *
  * @throws Will throw an error if no metrics are provided and `useDefaultMetrics` is false.
  *
  * @example
- * const files = await loadMetricFiles(true, '/project/customMetrics', __dirname);
+ * const files = await loadMetricFiles(true, __dirname, '/project/customMetrics');
  */
-async function loadMetricFiles (useDefaultMetrics, customMetricsPath, __dirname) {
+async function loadMetricFiles (useDefaultMetrics, __dirname, customMetricsPath) {
   let metricFiles = []
 
   if (!useDefaultMetrics && !customMetricsPath) {
@@ -45,7 +45,7 @@ async function loadMetricFiles (useDefaultMetrics, customMetricsPath, __dirname)
  * Imports a metric file and validates its structure.
  *
  * @param {{filePath: string}} file - Metric file object.
- * @returns {Promise<{state: Object, visitors: Object, postProcessing?: Function}>}
+ * @returns {Promise<import('../types.js').MetricObject>}
  * Metric object containing state, visitors, and optional postProcessing function.
  *
  * @throws Will throw an error if the file lacks required exports or has an invalid/missing `state.id`.
@@ -81,8 +81,8 @@ async function importMetric (file) {
 /**
  * Loads and validates metric objects from a list of metric files.
  *
- * @param {Array<{filePath: string, fileName: string}>} metricFiles - Metric file objects to import.
- * @returns {Promise<Array<{state: Object, visitors: Object, postProcessing?: Function}>>}
+ * @param {import('../types.js').FileEntry[]} metricFiles - Metric file objects to import.
+ * @returns {Promise<import('../types.js').MetricObject[]>}
  * Array of validated metric objects.
  */
 async function loadMetricObjects (metricFiles) {

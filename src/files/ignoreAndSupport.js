@@ -13,8 +13,8 @@ import { logger } from '../logger/logger.js'
 /**
  * Reads a `.metricsignore` file and returns an array of absolute paths to ignore.
  *
- * @param {string} ignoreMetricsFilePath - Path to the `.metricsignore` file.
- * @returns {Promise<Array<string>>} - List of absolute file paths to ignore.
+ * @param {string} [ignoreMetricsFilePath] - Path to the `.metricsignore` file (optional).
+ * @returns {Promise<string[]>} - List of absolute file paths to ignore.
  *
  * @example
  * const ignoredFiles = await getIgnored('/project/.metricsignore');

@@ -1,3 +1,4 @@
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Functions Per File',
   description: 'Records all named functions in each source file, mapping function names to their AST node',
@@ -7,6 +8,7 @@ const state = {
   status: false
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   // Entry point for each parsed file, load dependency and create functions array for each file
   Program (path) {
@@ -55,6 +57,7 @@ const visitors = {
 }
 
 // Clean up state before finishing
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

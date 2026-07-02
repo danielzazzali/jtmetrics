@@ -1,5 +1,6 @@
 import fs from 'fs'
 
+/** @type {import('../types.js').MetricState} */
 const state = {
   name: 'Lines Per File',
   description: 'Counts total and non-empty lines for each analyzed source file',
@@ -16,6 +17,7 @@ function splitLines (source) {
   return lines
 }
 
+/** @type {import('../types.js').MetricVisitors} */
 const visitors = {
   Program (path) {
     state.currentFile = path.node.filePath
@@ -44,6 +46,7 @@ const visitors = {
   }
 }
 
+/** @param {import('../types.js').MetricState} state */
 function postProcessing (state) {
   delete state.currentFile
   delete state.dependencies

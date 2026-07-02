@@ -66,3 +66,47 @@ export const KEYS_TO_REMOVE = [
   'extra',
   'innerComments',
   'directives']
+
+/**
+ * Babel AST node type string constants used in node type comparisons.
+ * @type {{ [key: string]: string }}
+ */
+export const AST_NODE_TYPES = {
+  Program: 'Program',
+  ExportNamedDeclaration: 'ExportNamedDeclaration',
+  ExportDefaultDeclaration: 'ExportDefaultDeclaration',
+  VariableDeclarator: 'VariableDeclarator',
+  ClassExpression: 'ClassExpression',
+  MemberExpression: 'MemberExpression',
+  Identifier: 'Identifier',
+  ThisExpression: 'ThisExpression',
+  ArrowFunctionExpression: 'ArrowFunctionExpression',
+  FunctionExpression: 'FunctionExpression',
+  ObjectProperty: 'ObjectProperty',
+  StringLiteral: 'StringLiteral',
+  AssignmentExpression: 'AssignmentExpression'
+}
+
+/**
+ * Babel AST method kind string constants.
+ * @type {{ [key: string]: string }}
+ */
+export const METHOD_KINDS = {
+  Constructor: 'constructor'
+}
+
+/**
+ * Custom method name aliases used during metric computation.
+ * @type {{ [key: string]: string }}
+ */
+export const METHOD_ALIASES = {
+  Constructor: '_constructor'
+}
+
+/**
+ * Special callee name string constants.
+ * @type {{ [key: string]: string }}
+ */
+export const CALLEE_NAMES = {
+  Require: 'require'
+}
